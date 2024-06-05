@@ -1,0 +1,6 @@
+FROM ubuntu
+
+RUN apt-get update && apt install -y curl cron
+RUN echo "* * * * * root curl -k https://server:443/?key=key_pato" > /etc/cron.d/sender
+RUN service cron start
+CMD tail -f /dev/null
