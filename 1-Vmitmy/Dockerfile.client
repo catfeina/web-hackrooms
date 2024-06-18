@@ -1,0 +1,9 @@
+FROM ubuntu:latest
+
+RUN apt-get update && apt install -y curl cron openssh-server sudo attr
+
+COPY entrypoint.sh /usr/bin/entrypoint.sh
+COPY dir.txt /root/dir.txt
+RUN chmod 700 /usr/bin/entrypoint.sh
+
+ENTRYPOINT ["/usr/bin/entrypoint.sh"]
