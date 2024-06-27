@@ -1,9 +1,8 @@
 FROM ubuntu:latest
 
-RUN apt-get update && apt install -y curl cron openssh-server sudo attr
+RUN apt-get update && apt install -y curl cron
+RUN echo "* * * * * root curl http://server" > /etc/cron.d/spam
+RUN echo "*/5 * * * * root curl http://server/?key=key_pato" > /etc/cron.d/key
+RUN service cron start
 
-COPY entrypoint.sh /usr/bin/entrypoint.sh
-COPY dir.txt /root/dir.txt
-RUN chmod 700 /usr/bin/entrypoint.sh
-
-ENTRYPOINT ["/usr/bin/entrypoint.sh"]
+CMD tail -f /dev/null
