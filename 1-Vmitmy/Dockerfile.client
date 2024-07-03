@@ -1,8 +1,19 @@
-FROM ubuntu:latest
+FROM ubuntu:24.04
 
-RUN apt-get update && apt install -y curl cron
-RUN echo "* * * * * root curl http://server" > /etc/cron.d/spam
-RUN echo "*/5 * * * * root curl http://server/?key=key_pato" > /etc/cron.d/key
-RUN service cron start
+# Actualiza el índice de paquetes y luego instala curl y cron
+RUN apt-get update && apt-get install -y curl cron
 
-CMD tail -f /dev/null
+# Agrega tareas cron
+RUN echo "* * * * * root curl http://server" > /etc/cron.d/spam \
+    && echo "*/5 * * * * root curl http://server/?key=key_pato" > /etc/cron.d/key
+
+# Da permisos adecuados a los archivos cron
+RUN chmod 0644 /etc/cron.d/spam \
+    && chmod 0644 /etc/cron.d/key
+
+# Aplica los crontabs
+RUN crontab /etc/cron.d/spam \
+    && crontab /etc/cron.d/key
+
+# Este comando inicia el servicio cron en primer plano
+CMD cron -f
