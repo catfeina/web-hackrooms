@@ -1,4 +1,5 @@
-FROM angular
+FROM node:latest
+RUN npm install -g @angular/cli
 WORKDIR /app
 COPY package*.json ./
 RUN npm install
