@@ -11,6 +11,6 @@ export class HiddenButtonComponent {
   constructor(private router: Router) {}
 
   redirectToPipe() {
-    this.router.navigate(['/pipeline'], { queryParams: { flag110: 'key_pato' } });
+    window.location.href = this.router.createUrlTree(['/pipeline'], { queryParams: { flag110: 'key_pato' } }).toString();
   }
 }
