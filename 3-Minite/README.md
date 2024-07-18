@@ -1,13 +1,13 @@
 # Minite
 
-- [1. Descripción](#1.-descripción)
-- [2. Instalación y despliegue](#2.-instalación-y-despliegue)
-- [2.1. Despliegue automático](#2.1.-despliegue-automático)
-- [2.2. Despliegue semiautomático](#2.2.-despliegue-semiautomático)
-- [2.3. Despliegue manual](#2.3.-despliegue-manual)
-- [3. Descripción del laboratorio](#3.-descripción-del-laboratorio)
-- [4. Resolución de la máquina](#4.-resolución-de-la-máquina)
-- [4.1. Descripción general](#4.1.-descripción-general)
+- [1. Descripción](#1-descripción)
+- [2. Instalación y despliegue](#2-instalación-y-despliegue)
+- [2.1. Despliegue automático](#21-despliegue-automático)
+- [2.2. Despliegue semiautomático](#22-despliegue-semiautomático)
+- [2.3. Despliegue manual](#23-despliegue-manual)
+- [3. Descripción del laboratorio](#3-descripción-del-laboratorio)
+- [4. Resolución de la máquina](#4-resolución-de-la-máquina)
+- [4.1. Descripción general](#41-descripción-general)
 
 ## 1. Descripción
 

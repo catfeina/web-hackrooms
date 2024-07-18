@@ -1,14 +1,14 @@
 # Seekurp
 
-- [1. Descripción](#1.-descripción)
-- [2. Instalación y despliegue](#2.-instalación-y-despliegue)
-- [2.1. Despliegue automático](#2.1.-despliegue-automático)
-- [2.2. Despliegue semiautomático](#2.2.-despliegue-semiautomático)
-- [2.3. Despliegue manual](#2.3.-despliegue-manual)
-- [3. Descripción del laboratorio](#3.-descripción-del-laboratorio)
-- [4. Resolución de la máquina](#4.-resolución-de-la-máquina)
-- [4.1. Camino de la felicidad](#4.1.-camino-de-la-felicidad)
-- [4.2. Camino del dolor](#4.2.-camino-del-dolor)
+- [1. Descripción](#1-descripción)
+- [2. Instalación y despliegue](#2-instalación-y-despliegue)
+- [2.1. Despliegue automático](#21-despliegue-automático)
+- [2.2. Despliegue semiautomático](#22-despliegue-semiautomático)
+- [2.3. Despliegue manual](#23-despliegue-manual)
+- [3. Descripción del laboratorio](#3-descripción-del-laboratorio)
+- [4. Resolución de la máquina](#4-resolución-de-la-máquina)
+- [4.1. Camino de la felicidad](#41-camino-de-la-felicidad)
+- [4.2. Camino del dolor](#42-camino-del-dolor)
 
 ## 1. Descripción
 

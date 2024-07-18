@@ -1,15 +1,15 @@
 # Vmitmy
 
-- [1. Descripción](#1.-descripción)
-- [2. Instalación y despliegue](#2.-instalación-y-despliegue)
-- [2.1. Despliegue automático](#2.1.-despliegue-automático)
-- [2.2. Despliegue manual](#2.2.-despliegue-manual)
-- [2.3. Aclaraciones](#2.3.-aclaraciones)
-- [3. Descripción del laboratorio](#3.-descripción-del-laboratorio)
-- [4. Resolución de la máquina](#4.-resolución-de-la-máquina)
-- [4.1. Intercepción de sabuesos](#4.1.-intercepción-de-sabuesos)
-- [4.2. Cracking de credenciales](#4.2.-Cracking-de-credenciales)
-- [4.3. Recuperación de la flag](#4.3.-recuperación-de-la-flag)
+- [1. Descripción](#1-descripción)
+- [2. Instalación y despliegue](#2-instalación-y-despliegue)
+- [2.1. Despliegue automático](#21-despliegue-automático)
+- [2.2. Despliegue manual](#22-despliegue-manual)
+- [2.3. Aclaraciones](#23-aclaraciones)
+- [3. Descripción del laboratorio](#3-descripción-del-laboratorio)
+- [4. Resolución de la máquina](#4-resolución-de-la-máquina)
+- [4.1. Intercepción de sabuesos](#41-intercepción-de-sabuesos)
+- [4.2. Cracking de credenciales](#42-Cracking-de-credenciales)
+- [4.3. Recuperación de la flag](#43-recuperación-de-la-flag)
 
 ## 1. Descripción
 
@@ -25,7 +25,7 @@ Para desplegar el laboratorio, basta con descargar la máquina desde este [enlac
 
 ### 2.2. Despliegue manual
 
-Para desplegar el laboratorio manualmente, debemos configurar una máquina, por ejemplo, con Alpine Linux. Para dejar operativa la máquina, podemos guiarnos del script `/home/yuno/repos/web-hackrooms/1-Vmitmy/conf-manual.sh` para instalar Docker, configurar la red macvlan, interfaz y subinterfaz, y lanzar los contenedores necesarios.
+Para desplegar el laboratorio manualmente, debemos configurar una máquina, por ejemplo, con Alpine Linux. Para dejar operativa la máquina, podemos guiarnos del script [conf-manual.sh](conf-manual.sh) para instalar Docker, configurar la red macvlan, interfaz y subinterfaz, y lanzar los contenedores necesarios.
 
 ### 2.3. Aclaraciones
 
