@@ -1,10 +1,15 @@
 # Vmitmy
 
-- [1. Descripción](1.-descripción)
-- [2. Instalación y despliegue](2.-instalación-y-despliegue)
-- [2.1. Despliegue automático](2.1.-despliegue-automático)
-- [2.2. Despliegue manual](2.2.-despliegue-manual)
-- [2.3. Aclaraciones](2.3.-aclaraciones)
+- [1. Descripción](#1.-descripción)
+- [2. Instalación y despliegue](#2.-instalación-y-despliegue)
+- [2.1. Despliegue automático](#2.1.-despliegue-automático)
+- [2.2. Despliegue manual](#2.2.-despliegue-manual)
+- [2.3. Aclaraciones](#2.3.-aclaraciones)
+- [3. Descripción del laboratorio](#3.-descripción-del-laboratorio)
+- [4. Resolución de la máquina](#4.-resolución-de-la-máquina)
+- [4.1. Intercepción de sabuesos](#4.1.-intercepción-de-sabuesos)
+- [4.2. Cracking de credenciales](#4.2.-Cracking-de-credenciales)
+- [4.3. Recuperación de la flag](#4.3.-recuperación-de-la-flag)
 
 ## 1. Descripción
 
@@ -26,7 +31,7 @@ Para desplegar el laboratorio manualmente, debemos configurar una máquina, por 
 
 Los contenedores y la subinterfaz trabajan con la subred 192.168.0.0/24. Los contenedores se lanzan con las IPs 192.168.0.90 y 192.168.0.91. Si esta no es la subred en la que se está trabajando, se debe ingresar al servidor y cambiar estos valores en el script `/usr/local/bin/docker.sh`. El usuario es `root` y la contraseña es `pato`.
 
-## 3. Objetivos del laboratorio
+## 3. Descripción del laboratorio
 
 **Description**
 Después de salir del nivel 15, escuchas a Jerry mencionar que, para salir del nivel 110, debes encontrar y unir una llave que está rota. Escuchas al sabueso en 192.168.0.90 y en 192.168.0.91 discutir sobre el paradero de la entrada. Ahora sigues tu camino.
