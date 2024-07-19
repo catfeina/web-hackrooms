@@ -442,19 +442,19 @@
     ]
   },
   "packageFolders": {
-    "/root/.nuget/packages/": {}
+    "C:\\Users\\Desarrollo\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/app/minimalapi/minimalapi.csproj",
+      "projectUniqueName": "\\\\wsl.localhost\\Arch\\home\\yuno\\repos\\web-hackrooms\\3-Minite\\minimalapi\\minimalapi.csproj",
       "projectName": "minimalapi",
-      "projectPath": "/app/minimalapi/minimalapi.csproj",
-      "packagesPath": "/root/.nuget/packages/",
-      "outputPath": "/app/minimalapi/obj/",
+      "projectPath": "\\\\wsl.localhost\\Arch\\home\\yuno\\repos\\web-hackrooms\\3-Minite\\minimalapi\\minimalapi.csproj",
+      "packagesPath": "C:\\Users\\Desarrollo\\.nuget\\packages\\",
+      "outputPath": "\\\\wsl.localhost\\Arch\\home\\yuno\\repos\\web-hackrooms\\3-Minite\\minimalapi\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/root/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\Desarrollo\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
@@ -511,7 +511,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/8.0.303/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.303/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
