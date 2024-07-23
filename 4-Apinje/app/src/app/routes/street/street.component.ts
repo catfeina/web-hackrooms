@@ -38,18 +38,14 @@ export class StreetComponent implements OnInit {
     );
   }
 
-  SendData() {
-    const data = {
-      Username: 'pato',
-      Password: 'asdf'
-    }
-
-    this._api.postData('User/login', data).subscribe(
+  authenticateUser() {
+    this._api.authenticate('test', 'password').subscribe(
       response => {
-        this.data = response;
+        localStorage.setItem('authToken', response.token);
+        console.log('Autenticado correctamente');
       },
       error => {
-        console.log(error);
+        console.error('Authentication error:', error);
       }
     );
   }

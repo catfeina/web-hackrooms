@@ -1,15 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Security.Cryptography;
-using System.Text;
 using mvcapi.Context;
 using mvcapi.Models.Response;
-using mvcapi.Models.Request;
-//using Microsoft.AspNetCore.Cors;
-
 namespace mvcapi.Controllers;
 
-//[EnableCors("AllowAllOrigins")]
 [Route("api/[controller]")]
 [ApiController]
 public class UserController(MyDbContext context) : ControllerBase
@@ -53,26 +47,5 @@ public class UserController(MyDbContext context) : ControllerBase
             return NotFound();
         }
 
-    }
-
-    [HttpPost("login")]
-    public async Task<IActionResult> Login([FromBody] LoginRequest loginRequest)
-    {
-        var user = await _user.User
-            .Where(u => u.User == loginRequest.Username)
-            .FirstOrDefaultAsync();
-
-        if (user == null)
-            return Unauthorized("Invalid username or password");
-
-        using var md5 = MD5.Create();
-        var inputBytes = Encoding.ASCII.GetBytes(loginRequest.Password);
-        var hashBytes = md5.ComputeHash(inputBytes);
-        var hash = BitConverter.ToString(hashBytes).Replace("-", "").ToLower();
-
-        if (hash != user.Pass)
-            return Unauthorized("Invalid username or password");
-
-        return Ok("Login successful");
     }
 }
