@@ -1,51 +1,52 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System.Security.Cryptography;
-using System.Text;
-using mvcapi.Models.Request;
-using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using mvcapi.Context;
+using Microsoft.AspNetCore.Identity;
+
+namespace mvcapi.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class AuthController(MyDbContext context) : ControllerBase
+public class AuthController(
+    UserManager<IdentityUser> userManager,
+    SignInManager<IdentityUser> signInManager
+    ) : ControllerBase
 {
-    private readonly MyDbContext _user = context;
-    [HttpPost("login")]
-    public async Task<IActionResult> Login([FromBody] LoginRequest loginRequest)
+    private readonly UserManager<IdentityUser> _userManager = userManager;
+    private readonly SignInManager<IdentityUser> _signInManager = signInManager;
+
+    [HttpPost("register")]
+    public async Task<IActionResult> Register([FromBody] Models.Request.RegisterRequest registerRequest)
     {
-        var user = await _user.User
-            .Where(u => u.User == loginRequest.Username)
-            .FirstOrDefaultAsync();
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
 
-        if (user == null)
-            return Unauthorized(new { success = false, message = "Invalid username or password" });
-
-        using var md5 = MD5.Create();
-        var inputBytes = Encoding.ASCII.GetBytes(loginRequest.Password);
-        var hashBytes = md5.ComputeHash(inputBytes);
-        var hash = BitConverter.ToString(hashBytes).Replace("-", "").ToLower();
-
-        if (hash != user.Pass)
-            return Unauthorized(new { success = false, message = "Invalid username or password" });
-
-        // Generar el token JWT
-        var tokenHandler = new JwtSecurityTokenHandler();
-        var key = Encoding.ASCII.GetBytes(Environment.GetEnvironmentVariable("JWT_SECRET"));
-        var tokenDescriptor = new SecurityTokenDescriptor
+        var user = new IdentityUser
         {
-            Subject = new ClaimsIdentity(new Claim[]
-            {
-                new Claim(ClaimTypes.Name, user.User)
-            }),
-            Expires = DateTime.UtcNow.AddHours(1),
-            SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+            UserName = registerRequest.Username,
+            Email = registerRequest.Email
         };
-        var token = tokenHandler.CreateToken(tokenDescriptor);
-        var tokenString = tokenHandler.WriteToken(token);
 
-        return Ok(new { Success = true, Token = tokenString });
+        var result = await _userManager.CreateAsync(user, registerRequest.Password);
+
+        if (result.Succeeded)
+            return Ok(new { success = true });
+
+        return BadRequest(new { success = false, errors = result.Errors });
+    }
+
+    [HttpPost("login")]
+    public async Task<IActionResult> Login([FromBody] Models.Request.LoginRequest loginRequest)
+    {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
+        var user = await _userManager.FindByNameAsync(loginRequest.Username);
+
+        if (user != null && await _userManager.CheckPasswordAsync(user, loginRequest.Password))
+        {
+            await _signInManager.SignInAsync(user, isPersistent: false);
+            return Ok(new { success = true });
+        }
+
+        return Unauthorized(new { success = false, message = "Invalid username or password" });
     }
 }
