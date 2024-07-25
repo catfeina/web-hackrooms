@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../services/api.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-street',
@@ -8,44 +9,41 @@ import { ApiService } from '../../services/api.service';
 })
 export class StreetComponent implements OnInit {
   constructor(
-    private _api: ApiService
+    private _api: ApiService,
+    private _route: Router
   ) { }
   ngOnInit(): void {
-    this.FullData();
+    if (this._api.isAuthenticated()) {
+      this._route.navigate(['/arrow']);
+    }
   }
 
-  data: any[] = [];
+  _txtUser: string = '';
+  _txtPass: string = '';
+  message: string = '';
 
-  FullData() {
-    this._api.getDataForConstructor('User').subscribe(
+  login() {
+    if (this._txtUser == '') {
+      this.message = 'Debe ingresar su usuario para continuar';
+      return;
+    }
+
+    if (this._txtPass == '') {
+      this.message = 'Debe ingresar su contraseña para continuar';
+      return;
+    }
+
+    this.authenticateUser(this._txtUser, this._txtPass);
+  }
+
+  authenticateUser(user: string, pass: string) {
+    this._api.authenticate(user, pass).subscribe(
       response => {
-        this.data = response;
+        this.message = 'Autenticado correctamente';
+        this._route.navigate(['/arrow']);
       },
       error => {
-        console.log(error);
-      }
-    );
-  }
-
-  GetUser() {
-    this._api.getData('User/1').subscribe(
-      user => {
-        this.data = user;
-      },
-      error => {
-        console.log(error);
-      }
-    );
-  }
-
-  authenticateUser() {
-    this._api.authenticate('test', 'password').subscribe(
-      response => {
-        localStorage.setItem('authToken', response.token);
-        console.log('Autenticado correctamente');
-      },
-      error => {
-        console.error('Authentication error:', error);
+        this.message = `Authentication error: ${error}`;
       }
     );
   }

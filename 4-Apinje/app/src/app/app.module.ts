@@ -3,16 +3,20 @@ import { BrowserModule, provideClientHydration } from '@angular/platform-browser
 import { HttpClientModule, provideHttpClient, withFetch } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HomeComponent } from './routes/home/home.component';
 import { ButtonComponent } from './components/button/button.component';
 import { StreetComponent } from './routes/street/street.component';
+import { ArrowComponent } from './routes/arrow/arrow.component';
+import { PoemComponent } from './routes/poem/poem.component';
+import { TextboxComponent } from './components/textbox/textbox.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
     ButtonComponent,
-    StreetComponent
+    StreetComponent,
+    ArrowComponent,
+    PoemComponent,
+    TextboxComponent
   ],
   imports: [
     BrowserModule,

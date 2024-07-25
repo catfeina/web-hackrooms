@@ -1,0 +1,18 @@
+.textbox-container {
+    position: relative;
+    width: 100%;
+    align-content: center;
+    display: flex;
+    justify-content: center;
+}
+
+.textbox-input {
+    width: 70%;
+    padding: 10px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+.textbox-input::placeholder {
+    color: #aaa;
+}

@@ -1,0 +1,35 @@
+.row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+    background-color: darkgray;
+    border-radius: 10px;
+}
+
+.verse-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.row-title {
+    flex: 1;
+    padding-right: 1rem;
+    text-align: right;
+}
+
+.row-title h3 {
+    font-size: 1rem;
+}
+
+.row-verse {
+    flex: 3;
+}
+
+.row-verse p {
+    margin: 0;
+    background-color: lightgray;
+    padding: 5px;
+    margin: 3px;
+    box-shadow: 5px 5px 5px gray;
+}

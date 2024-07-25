@@ -1,10 +1,10 @@
 .btn-primary {
-    background-color: cornflowerblue;
+    background-color: black;
     color: white;
 }
 
 .btn-primary:hover {
-    background-color: cadetblue;
+    background-color: gray;
 }
 
 .btn-secondary {
@@ -20,7 +20,6 @@ button {
     padding: 20px 30px;
     margin: 5px;
     border: none;
-    border-radius: 5px;
     font-weight: bold;
 }
 

@@ -1,11 +1,7 @@
-<div>
-    <h1>Data</h1>
-    <ul>
-        <li *ngFor="let item of data">
-            {{ item.name }}
-        </li>
-    </ul>
+<div class="login">
+    <app-textbox ToolTip="Usuario" [(value)]="_txtUser"></app-textbox>
+    <app-textbox ToolTip="Contraseña" [isPassword]="true" [(value)]="_txtPass"></app-textbox>
+    <app-button [isEnabled]="true" [isPrimary]="true" Label="Login" (onClick)="login()"></app-button>
 
-    <app-button [isEnabled]="true" [isPrimary]="true" Label="Get" (onClick)="GetUser()"></app-button>
-    <app-button [isEnabled]="true" [isPrimary]="false" Label="Send" (onClick)="authenticateUser()"></app-button>
+    <div *ngIf="message" class="message">{{ message }}</div>
 </div>
