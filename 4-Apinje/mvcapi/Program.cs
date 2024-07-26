@@ -4,9 +4,10 @@ using mvcapi.Context;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Configuración de CORS
-var corsName = "AllowAllOrigins";
-var allowedOrigins = builder.Configuration.GetSection("OriginsCors:AllowedOrigins").Get<string[]>();
+var corsName = "AllowedOrigins";
+var allowedOrigins = Environment.GetEnvironmentVariable("OriginsCors")?.Split(',');
+Console.WriteLine($"[+] Origins: {allowedOrigins}");
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(corsName, policy =>
@@ -18,17 +19,14 @@ builder.Services.AddCors(options =>
     });
 });
 
-// Registro de servicios
 builder.Services.AddControllers();
 builder.Services
     .AddIdentity<IdentityUser, IdentityRole>()
     .AddEntityFrameworkStores<MyDbContext>()
     .AddDefaultTokenProviders();
 
-// Registro del MD5PasswordHasher
 builder.Services.AddTransient<IPasswordHasher<IdentityUser>, MD5PasswordHasher<IdentityUser>>();
 
-// Configuración de la autenticación con cookies
 builder.Services.ConfigureApplicationCookie(options =>
 {
     options.LoginPath = "/api/Auth/login";
@@ -64,5 +62,32 @@ app.UseHttpsRedirection();
 app.UseCors(corsName);
 app.UseAuthentication();
 app.UseAuthorization();
+
+/*
+app.Use(async (context, next) =>
+{
+    var origin = context.Request.Headers["Origin"].ToString();
+    //Con esto veo el origin de la solicitud
+    Console.WriteLine($"[+] Origen: {origin};");
+
+    if (allowedOrigins.Contains(origin))
+    {
+        context.Response.Headers.Append("Access-Control-Allow-Origin", origin);
+        context.Response.Headers.Append("Access-Control-Allow-Credentials", "true");
+        context.Response.Headers.Append("Access-Control-Allow-Headers", "Content-Type, Authorization");
+        context.Response.Headers.Append("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+    }
+
+    // Manejar solicitudes OPTIONS
+    if (context.Request.Method == "OPTIONS")
+    {
+        context.Response.StatusCode = StatusCodes.Status204NoContent;
+        return;
+    }
+
+    await next.Invoke();
+});
+*/
+
 app.MapControllers();
 app.Run();
