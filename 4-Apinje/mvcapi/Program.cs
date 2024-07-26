@@ -6,7 +6,6 @@ var builder = WebApplication.CreateBuilder(args);
 
 var corsName = "AllowedOrigins";
 var allowedOrigins = Environment.GetEnvironmentVariable("OriginsCors")?.Split(',');
-Console.WriteLine($"[+] Origins: {allowedOrigins}");
 
 builder.Services.AddCors(options =>
 {
@@ -29,8 +28,13 @@ builder.Services.AddTransient<IPasswordHasher<IdentityUser>, MD5PasswordHasher<I
 
 builder.Services.ConfigureApplicationCookie(options =>
 {
+    options.Cookie.HttpOnly = false; //false para que sea accesible por JS
+    options.Cookie.SecurePolicy = CookieSecurePolicy.None; //.Always para https
+    options.Cookie.SameSite = SameSiteMode.Lax; //.None para no permitir cookies en http
     options.LoginPath = "/api/Auth/login";
     options.AccessDeniedPath = "/api/Auth/access-denied";
+    options.ExpireTimeSpan = TimeSpan.FromHours(1); // Duración de la cookie configurada a 1 hora
+    //options.SlidingExpiration = true; // Renovar la cookie si el usuario está activo
     options.Events.OnRedirectToLogin = context =>
     {
         context.Response.StatusCode = StatusCodes.Status401Unauthorized;
@@ -62,32 +66,5 @@ app.UseHttpsRedirection();
 app.UseCors(corsName);
 app.UseAuthentication();
 app.UseAuthorization();
-
-/*
-app.Use(async (context, next) =>
-{
-    var origin = context.Request.Headers["Origin"].ToString();
-    //Con esto veo el origin de la solicitud
-    Console.WriteLine($"[+] Origen: {origin};");
-
-    if (allowedOrigins.Contains(origin))
-    {
-        context.Response.Headers.Append("Access-Control-Allow-Origin", origin);
-        context.Response.Headers.Append("Access-Control-Allow-Credentials", "true");
-        context.Response.Headers.Append("Access-Control-Allow-Headers", "Content-Type, Authorization");
-        context.Response.Headers.Append("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-    }
-
-    // Manejar solicitudes OPTIONS
-    if (context.Request.Method == "OPTIONS")
-    {
-        context.Response.StatusCode = StatusCodes.Status204NoContent;
-        return;
-    }
-
-    await next.Invoke();
-});
-*/
-
 app.MapControllers();
 app.Run();

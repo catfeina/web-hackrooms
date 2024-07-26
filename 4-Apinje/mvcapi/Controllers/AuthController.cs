@@ -49,4 +49,12 @@ public class AuthController(
 
         return Unauthorized(new { success = false, message = "Invalid username or password" });
     }
+
+    [HttpPost("logout")]
+    public async Task<IActionResult> Logout()
+    {
+        await _signInManager.SignOutAsync();
+        return Ok(new { success = true });
+    }
+
 }

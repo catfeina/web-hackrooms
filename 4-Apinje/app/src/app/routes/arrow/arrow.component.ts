@@ -7,23 +7,27 @@ import { ApiService } from '../../services/api.service';
   styleUrl: './arrow.component.css'
 })
 export class ArrowComponent implements OnInit {
+  message: string = '';
+  flag: string = '';
   data: any[] = [];
 
   constructor(
     private _api: ApiService
   ) { }
+
   ngOnInit(): void {
     this.getFlag();
   }
 
   getFlag() {
-    this._api.getData('flag').subscribe(
+    this._api.getPrivateData('flag').subscribe(
       data => {
-        this.data = data;
-        console.log('Data retrieved successfully');
+        this.message = data.message;
+        this.flag = data.flag;
       },
       error => {
-        console.log('Error retrieving data', error);
+        this.message = `Error retrieving data: ${error}`;
+        this._api.logout();
       }
     );
   }

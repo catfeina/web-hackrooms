@@ -38,9 +38,11 @@ export class StreetComponent implements OnInit {
 
   authenticateUser(user: string, pass: string) {
     this._api.authenticate(user, pass).subscribe(
-      response => {
+      () => {
         this.message = 'Autenticado correctamente';
-        this._route.navigate(['/arrow']);
+        this._route.navigate(['/arrow']).then(() => {
+          window.location.reload();
+        });
       },
       error => {
         this.message = `Authentication error: ${error}`;

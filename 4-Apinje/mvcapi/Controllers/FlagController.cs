@@ -14,7 +14,7 @@ public class FlagController : ControllerBase
     {
         var flag = new FlagResponse()
         {
-            Message = "Toma, pa' que dejes de llorar aweonao. Flag: ",
+            Message = "Toma, pa' que dejes de llorar aweonao.",
             Flag = "10ec91b80d9a29e28107dc92befb7090"
         };
 

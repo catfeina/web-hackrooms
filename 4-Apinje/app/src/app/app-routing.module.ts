@@ -9,9 +9,9 @@ const routes: Routes = [
   { path: '', redirectTo: '/street', pathMatch: 'full' },
   { path: 'street', component: StreetComponent },
   { path: 'arrow', component: ArrowComponent, canActivate: [ArrowGuard] },
-  { path: 'poem', component: PoemComponent },
+  { path: 'poem/:id', component: PoemComponent },
   { path: '', component: StreetComponent },
-  { path: '**', redirectTo: '/home' }
+  { path: '**', redirectTo: '/street' }
 ];
 
 @NgModule({

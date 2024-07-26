@@ -2,38 +2,40 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, throwError } from 'rxjs';
 import { Environment } from '../environments/environments';
+import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
   private urlApi = Environment.apiUrl;
-  private urlApiForConstructor = Environment.apiUrlConstructor;
 
   constructor(
-    private _http: HttpClient
+    private _http: HttpClient,
+    private cookieService: CookieService
   ) { }
 
   public authenticate(
     username: string,
     password: string
   ): Observable<any> {
-    return this._http.post<any>(`${this.urlApi}/Auth/login`, { username, password }, { withCredentials: true })
+    return this._http.post<any>(`${this.urlApi}/Auth/login`,
+      { username, password }, { withCredentials: false }
+    )
       .pipe(
         catchError(this.handleError)
       );
   }
 
   public isAuthenticated(): boolean {
-    console.log(document);
-    return document.cookie.includes('AspNetCore.Identity.Application');
+    return this.cookieService.check('.AspNetCore.Identity.Application');
   }
 
   public logout(): void {
-    // No necesitas eliminar cookies manualmente; una solicitud al endpoint de logout del backend será suficiente
-    this._http.post(`${this.urlApi}/Auth/logout`, {}, { withCredentials: true })
-      .subscribe(() => {
+    this._http.post(`${this.urlApi}/Auth/logout`, {}, { withCredentials: true }).subscribe(
+      () => {
         console.log('Logout successful');
+        this.cookieService.delete('.AspNetCore.Identity.Application');
       }, error => {
         console.error('Logout failed', error);
       });
@@ -47,7 +49,7 @@ export class ApiService {
     }
   }
 
-  public getData(
+  public getPrivateData(
     endpoint: string
   ): Observable<any> {
     return this._http.get<any>(`${this.urlApi}/${endpoint}`, { withCredentials: true })
@@ -56,17 +58,10 @@ export class ApiService {
       );
   }
 
-  public getDataForConstructor(
+  public getPublicData(
     endpoint: string
   ): Observable<any> {
-    return this._http.get<any>(`${this.urlApiForConstructor}/${endpoint}`, { withCredentials: true })
-      .pipe(
-        catchError(this.handleError)
-      );
-  }
-
-  public postData(endpoint: string, data: any): Observable<any> {
-    return this._http.post<any>(`${this.urlApi}/${endpoint}`, data, { withCredentials: true })
+    return this._http.get<any>(`${this.urlApi}/${endpoint}`, { withCredentials: false })
       .pipe(
         catchError(this.handleError)
       );

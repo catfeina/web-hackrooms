@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../services/api.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-poem',
@@ -8,17 +9,29 @@ import { ApiService } from '../../services/api.service';
 })
 export class PoemComponent implements OnInit {
   constructor(
-    private _api: ApiService
+    private _api: ApiService,
+    private _me: ActivatedRoute,
+    private _route: Router
   ) { }
 
   data: any[] = [];
 
   ngOnInit(): void {
-    this.getPoem();
+    this._me.params.subscribe(params => {
+      const id = params["id"];
+      console.log('[+] pato')
+
+      if (id) {
+        this.getPoem(id);
+      } else {
+        console.log('redirigiendo...');
+        this._route.navigate(['/poem/', '0']);
+      }
+    });
   }
 
-  getPoem() {
-    this._api.getDataForConstructor('Paragraph/0').subscribe(
+  getPoem(id: string) {
+    this._api.getPublicData(`Paragraph/${id}`).subscribe(
       response => {
         this.data = response;
       },

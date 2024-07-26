@@ -1,3 +1,17 @@
-<div *ngIf="data">
-    pato
+<div class="row">
+    <div class="col col-20">
+        <label class="title">Description</label>
+    </div>
+    <div class="col col-80">
+        <label>{{ message }}</label>
+    </div>
+</div>
+
+<div *ngIf="message" class="row">
+    <div class="col col-20">
+        <label class="title">Flag:</label>
+    </div>
+    <div class="col col-80">
+        <label>{{ flag }}</label>
+    </div>
 </div>

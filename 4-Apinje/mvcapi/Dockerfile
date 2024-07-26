@@ -20,7 +20,7 @@ COPY --from=build /app .
 COPY data /data
 
 ENV ASPNETCORE_ENVIRONMENT=Development
-ENV OriginsCors=http://localhost,http://server
+ENV OriginsCors=http://localhost,http://localhost:4200
 
 EXPOSE 8080
 ENTRYPOINT ["dotnet", "mvcapi.dll"]

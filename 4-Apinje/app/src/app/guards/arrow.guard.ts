@@ -16,7 +16,7 @@ export class ArrowGuard implements CanActivate {
     if (this.apiService.isAuthenticated()) {
       return true;
     } else {
-      this.router.navigate(['/poem']);
+      this.router.navigate(['/street']);
       return false;
     }
   }

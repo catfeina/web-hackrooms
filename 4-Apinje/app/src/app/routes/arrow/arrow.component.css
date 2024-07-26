@@ -1,0 +1,29 @@
+.row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+    background-color: black;
+    color: white;
+    border-radius: 3px;
+}
+
+.col {
+    padding: 10px;
+    border-radius: 5px;
+    margin: 5px;
+}
+
+.col-20 {
+    width: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.col-80 {
+    width: 80%;
+}
+
+.title {
+    font-weight: bold;
+}
