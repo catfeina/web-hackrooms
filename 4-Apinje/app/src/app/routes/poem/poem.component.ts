@@ -18,14 +18,13 @@ export class PoemComponent implements OnInit {
 
   ngOnInit(): void {
     this._me.params.subscribe(params => {
-      const id = params["id"];
-      console.log('[+] pato')
+      const id = encodeURIComponent(params["id"]);
 
       if (id) {
         this.getPoem(id);
       } else {
         console.log('redirigiendo...');
-        this._route.navigate(['/poem/', '0']);
+        this._route.navigate(['/poem', '0']);
       }
     });
   }

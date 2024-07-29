@@ -20,7 +20,7 @@ export class ApiService {
     password: string
   ): Observable<any> {
     return this._http.post<any>(`${this.urlApi}/Auth/login`,
-      { username, password }, { withCredentials: false }
+      { username, password }, { withCredentials: true }
     )
       .pipe(
         catchError(this.handleError)

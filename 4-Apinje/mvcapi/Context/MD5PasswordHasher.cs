@@ -3,28 +3,33 @@ using System.Security.Cryptography;
 using System.Text;
 
 namespace mvcapi.Context;
+using System;
+using System.Security.Cryptography;
+using System.Text;
+using Microsoft.AspNetCore.Identity;
+
 public class MD5PasswordHasher<TUser> : IPasswordHasher<TUser> where TUser : class
 {
     public string HashPassword(TUser user, string password)
     {
-        using var md5 = MD5.Create();
-        var bytes = Encoding.UTF8.GetBytes(password);
-        var hash = md5.ComputeHash(bytes);
-        return Convert.ToBase64String(hash);
+        var inputBytes = Encoding.ASCII.GetBytes(password);
+        var hashBytes = MD5.HashData(inputBytes);
+
+        // Convert the byte array to hexadecimal string
+        var sb = new StringBuilder();
+        for (int i = 0; i < hashBytes.Length; i++)
+        {
+            sb.Append(hashBytes[i].ToString("x2"));
+        }
+
+        return sb.ToString();
     }
 
-    public PasswordVerificationResult VerifyHashedPassword(
-        TUser user,
-        string hashedPassword,
-        string providedPassword
-    )
+    public PasswordVerificationResult VerifyHashedPassword(TUser user, string hashedPassword, string providedPassword)
     {
-        using var md5 = MD5.Create();
-        var bytes = Encoding.UTF8.GetBytes(providedPassword);
-        var hash = md5.ComputeHash(bytes);
-        var providedHash = Convert.ToBase64String(hash);
+        var hashOfProvidedPassword = HashPassword(user, providedPassword);
 
-        if (hashedPassword == providedHash)
+        if (hashedPassword.Equals(hashOfProvidedPassword, StringComparison.OrdinalIgnoreCase))
             return PasswordVerificationResult.Success;
 
         return PasswordVerificationResult.Failed;
