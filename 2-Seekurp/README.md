@@ -12,7 +12,7 @@
 
 ## 1. Descripción
 
-Esta imagen facilita un laboratorio centrado en inspecciones de contenido de una SPA. Los usuarios podrán practicar habilidades de captura de solicitudes e inspecciones de contenido JS. Este laboratorio utiliza una imagen basada en Nginx:Alpine y la SPA está construida con Angular 18.1.2.
+Esta imagen facilita un laboratorio centrado en inspecciones de contenido de una SPA. Los usuarios podrán practicar habilidades de captura de solicitudes e inspecciones de contenido JS. Este laboratorio utiliza una imagen basada en Nginx:Alpine y la SPA está construida con Angular 18.0.7.
 
 ## 2. Instalación y despliegue
 
