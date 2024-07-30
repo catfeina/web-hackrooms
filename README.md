@@ -37,6 +37,15 @@ Con el laboratorio [Seekurp](/2-Seekurp), deberás inspeccionar los archivos que
 **Descripción**:
 El laboratorio [ShellShift](/3-Minite) está diseñado para manipular solicitudes de un sitio web, junto con solicitudes básicas a una API.
 
+### 2.4. Owapi 3
+
+**Objetivos de aprendizaje**:
+- Conocer algunas de las vulneravilidades más comunes, de acuerdo a Owasp.
+- Comprender configuraciones de seguridad de una API.
+
+**Descripción**:
+El laboratorio [Apinje](/Apinje) proporciona un entorno para explotación de vulnerabilidades basadas en Owasp top 10.
+
 ## 3. Comenzando
 
 Para empezar con 'hackrooms', asegúrate de tener Docker instalado en tu sistema o contar con Virtual Box. Cada laboratorio viene con instrucciones detalladas sobre cómo desplegarlo y configurarlo usando Docker o Virtual Box, lo que te permitirá enfocarte en el aprendizaje y la práctica sin preocuparte tanto por la configuración del entorno.
