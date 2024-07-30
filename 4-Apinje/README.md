@@ -4,23 +4,30 @@
 - [2. Instalación y despliegue](#2-instalación-y-despliegue)
 - [2.1. Despliegue automático](#21-despliegue-automático)
 - [2.2. Despliegue manual](#22-despliegue-manual)
+- [2.3. Observaciones](#23-observaciones)
 - [3. Descripción del laboratorio](#3-descripción-del-laboratorio)
 - [4. Resolución de la máquina](#4-resolución-de-la-máquina)
 - [4.1. Descripción general](#41-descripción-general)
 
 ## 1. Descripción
 
-Este laboratorio está centrado en explotar vulnerabilidades mencionadas en el [Owasp Top 10](https://owasp.org/www-project-top-ten). Los usuarios podrán practicar habilidades de captura de solicitudes, inspecciones de contenido JS, errores de encriptación e inyecciones SQL. Este laboratorio utiliza dos imágenes: el servidor está basada en Nginx:Alpine, que contiene la SPA está construida con Angular 18, y la Api está construida con .Net Core 18.1.2.
+Este laboratorio está centrado en explotar vulnerabilidades mencionadas en el [Owasp Top 10](https://owasp.org/www-project-top-ten). Los usuarios podrán practicar habilidades de captura de solicitudes, inspecciones de contenido JS, errores de encriptación e inyecciones SQL. Este laboratorio utiliza dos imágenes: el servidor está basada en Nginx:Alpine, que contiene la SPA está construida con Angular 18.1.2, y la Api está construida con .Net Core 18.
 
 ## 2. Instalación y despliegue
+
+Para el despliegue de contenedores será necesario crear una red de tipo `bridge`:
+
+```bash
+docker network create apinje
+```
 
 ### 2.1. Despliegue automático
 
 Para desplegar el laboratorio, basta con ejecutar los siguientes comandos:
 
 ```bash
-docker run -d --name api -p 8080:8080 -e ASPNETCORE_ENVIRONMENT=Production kradbyte/apinje:api
-docker run -d --name server -p 80:80 kradbyte/apinje:server
+docker run -d --name api --network apinje -e ASPNETCORE_ENVIRONMENT=Production kradbyte/apinje:api
+docker run -d --name server -p 80:80 --network apinje kradbyte/apinje:server
 ```
 
 ### 2.2. Despliegue manual
@@ -64,25 +71,44 @@ docker system prune -fa
 docker build -t server .
 ```
 
-En caso de querer modificar la API, también hay un [dockerfile](minimalapi/Dockerfile) que servirá para compilar nuestra API. A diferencia del Dockerfile anterior, con la API solo podremos generar una imagen compilada, para pruebas deberemos instalar Visual Studio o eliminar y reconstruir la imagen por cada cambio que hagamos.
+En caso de modificar la API, también hay un [dockerfile](minimalapi/Dockerfile) que servirá para compilar nuestra API. A diferencia del Dockerfile anterior, con la API solo podremos generar una imagen compilada, para pruebas deberemos instalar Visual Studio o eliminar y reconstruir la imagen por cada cambio que hagamos.
 
 ```bash
 #cd mvcapi
 docker build -t api .
 ```
 
-Por último lanzamos los contenedores con nuestras imágenes creadas.
+- Por último lanzamos los contenedores con nuestras imágenes creadas.
 
 ```bash
-docker run -d --name server -p 80:80 server
-docker run -d --name api -p 8080:8080 -e ASPNETCORE_ENVIRONMENT=Production api
+docker run -d --name api --network apinje -e ASPNETCORE_ENVIRONMENT=Production api
+docker run -d --name server -p 80:80 --network apinje server
 ```
 
-> **Nota**: Si tenemos el puerto 80 ocupado por otro servicio, podremos modificar la variable `OriginsCors` para no tener problemas de Cors en la API. Si tenemos el puerto 8080 ocupado sí tendremos problemas en la SPA...por el momento solo se puede solucionarlo modificando el archivo [environments.ts](app/src/app/environments/environments.ts) y posteriormente compilando la SPA y construyendo la imagen con el [Dockerfile](Dockerfile).
+En caso de querer modificar la base de datos, deberemos dirigirnos a la carpeta [data](mvcapi/data) y lanzar alguna herramienta para SQLite o trabajar directamente con un contenedor:
 
 ```bash
-docker run -d --name server -p [NewPort]:80 kradbyte/apinje:server
-docker run -d --name api -p 8080:8080 -e ASPNETCORE_ENVIRONMENT -e OriginsCors=http://localhost:[NewPort] kradbyte/apinje:api
+# cd mvcapi/data
+docker run -it --rm --name sqlite -v $(pwd):/data -w /data nouchka/sqlite3 mydatabase.db
+```
+
+> La base de datos se copia dentro del contenedor al momento de la construcción de la API, por lo que no es persistente, a menos que se le monte un volumen.
+
+### 2.3. Observaciones
+
+- El único nombre del contenedor que no puede variar es el de la api, ya que la configuración internta de la SPA resuelve el DNS para consumir los endpoints. Se puede cambiar el nombre del contenedor, modificando el archivo [proxy.conf.json](app/src/proxy.conf.json) y compilando la aplicación, de igual modo hay que modificar el archivo [defult.conf](default.conf) con el nuevo nombre del contenedor de la api.
+
+- Si tenemos el puerto 80 ocupado por otro servicio, no habrá problema con mapear dicho puerto con otro.
+
+```bash
+docker run -d --name api --network apinje -e ASPNETCORE_ENVIRONMENT=Production api
+docker run -d --name server -p [NewHostPort]:80 --network apinje server
+```
+
+- Si se llegase a tener problemas de cors al consumir la API, podemos agregar la IP a los orígenes permitidos de la API, con la variable de entorno `OriginsCors`.
+
+```bash
+docker run -d --name api --network apinaje -e ASPNETCORE_ENVIRONMENT=Production -e OriginsCors=http://[IpClient]:[PortClient] kradbyte/apinaje:api
 ```
 
 ## 3. Descripción del laboratorio
