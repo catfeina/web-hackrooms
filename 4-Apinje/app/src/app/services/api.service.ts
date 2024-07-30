@@ -1,25 +1,22 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, throwError } from 'rxjs';
-import { Environment } from '../environments/environments';
 import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
-  private urlApi = Environment.apiUrl;
-
-  constructor(
-    private _http: HttpClient,
-    private cookieService: CookieService
-  ) { }
+    constructor(
+      private _http: HttpClient,
+      private cookieService: CookieService
+    ) { }
 
   public authenticate(
     username: string,
     password: string
   ): Observable<any> {
-    return this._http.post<any>(`${this.urlApi}/Auth/login`,
+    return this._http.post<any>(`/api/Auth/login`,
       { username, password }, { withCredentials: true }
     )
       .pipe(
@@ -32,7 +29,7 @@ export class ApiService {
   }
 
   public logout(): void {
-    this._http.post(`${this.urlApi}/Auth/logout`, {}, { withCredentials: true }).subscribe(
+    this._http.post(`/api/Auth/logout`, {}, { withCredentials: true }).subscribe(
       () => {
         console.log('Logout successful');
         this.cookieService.delete('.AspNetCore.Identity.Application');
@@ -52,7 +49,7 @@ export class ApiService {
   public getPrivateData(
     endpoint: string
   ): Observable<any> {
-    return this._http.get<any>(`${this.urlApi}/${endpoint}`, { withCredentials: true })
+    return this._http.get<any>(`/api/${endpoint}`, { withCredentials: true })
       .pipe(
         catchError(this.handleError)
       );
@@ -61,7 +58,7 @@ export class ApiService {
   public getPublicData(
     endpoint: string
   ): Observable<any> {
-    return this._http.get<any>(`${this.urlApi}/${endpoint}`, { withCredentials: false })
+    return this._http.get<any>(`/api/${endpoint}`, { withCredentials: false })
       .pipe(
         catchError(this.handleError)
       );
