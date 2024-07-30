@@ -87,7 +87,24 @@ docker run -d --name api -p 8080:8080 -e ASPNETCORE_ENVIRONMENT -e OriginsCors=h
 
 ## 3. Descripción del laboratorio
 
+**Description**
+Owasp es una organización sin fines de lucro que reúne cada cierto período de tiempo, las vulnerabilidades más comunes de las aplicaciones Web. Para este lab, emularás ser parte del red team para encontrar algunas de las 10 vulnerabilidades más comunes de las aplicaciones Web.
 
+**Target**
+Recupera la flag
+
+**Steps**
+- Auditoría general de funcionamiento
+- Búsqueda de rutas y endpoints
+- Exploración de vulnerabilidades Owasp
+- Recuperación de flag
+
+**Grants**
+- MD5, [500-worst-passwords.txt](https://github.com/danielmiessler/SecLists/blob/master/Passwords/Common-Credentials/500-worst-passwords.txt)
+- [2021](https://owasp.org/www-project-top-ten/): A02, A03 y A07
+
+**Tools**
+BurpSuite, Postman/curl, Development tools (navigator), John the Ripper/custom scripts.
 
 ## 4. Resolución de la máquina
 

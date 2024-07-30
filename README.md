@@ -44,7 +44,7 @@ El laboratorio [ShellShift](/3-Minite) está diseñado para manipular solicitude
 - Comprender configuraciones de seguridad de una API.
 
 **Descripción**:
-El laboratorio [Apinje](/Apinje) proporciona un entorno para explotación de vulnerabilidades basadas en Owasp top 10.
+El laboratorio [Apinje](/4-Apinje) proporciona un entorno para explotación de vulnerabilidades basadas en Owasp top 10.
 
 ## 3. Comenzando
 
