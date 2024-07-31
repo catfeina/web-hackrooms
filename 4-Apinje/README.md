@@ -11,7 +11,7 @@
 
 ## 1. Descripción
 
-Este laboratorio está centrado en explotar vulnerabilidades mencionadas en el [Owasp Top 10](https://owasp.org/www-project-top-ten). Los usuarios podrán practicar habilidades de captura de solicitudes, inspecciones de contenido JS, errores de encriptación e inyecciones SQL. Este laboratorio utiliza dos imágenes: el servidor está basada en Nginx:Alpine, que contiene la SPA está construida con Angular 18.1.1, y la Api está construida con .Net Core 18.
+Este laboratorio está centrado en explotar vulnerabilidades mencionadas en el [Owasp Top 10](https://owasp.org/www-project-top-ten). Los usuarios podrán practicar habilidades de captura de solicitudes, inspecciones de contenido JS, errores de encriptación e inyecciones SQL. Este laboratorio utiliza dos imágenes: el servidor está basada en Nginx:Alpine, que contiene la SPA está construida con Angular 18.1.1, y la Api está construida con .Net Core 8.
 
 ## 2. Instalación y despliegue
 
