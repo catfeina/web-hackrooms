@@ -6,6 +6,6 @@ public class PoemModel
 {
     [Key]
     public int Id { get; set; }
-    public required string Tittle { get; set; }
+    public required string Title { get; set; }
     public required string Verse { get; set; }
 }

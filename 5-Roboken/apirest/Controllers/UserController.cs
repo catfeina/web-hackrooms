@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.EntityFrameworkCore;
+using apirest.Models.Responses;
+using Microsoft.AspNetCore.Authorization;
 
 namespace apirest.Controllers;
 
@@ -16,7 +18,8 @@ public class UserController(
     private readonly SignInManager<IdentityUser> _sigInManager = signInManager;
     private readonly RoleManager<IdentityRole> _roleManager = roleManager;
 
-    [HttpPost("Role/Create")]
+    [Authorize(Roles = "Mishi")]
+    [HttpPost("Role")]
     public async Task<IActionResult> RegisterRole(
         [FromBody] Models.Requests.RegisterRoleRequest request
     )
@@ -39,11 +42,33 @@ public class UserController(
         catch (Exception e)
         {
             Console.WriteLine($"[+] Error al crear rol: {e.Message}");
-            return BadRequest(new { success = false, message = "Internal Server Error :c" });
+            return StatusCode(500, new { success = false, message = "Internal Server Error :c" });
         }
     }
 
-    [HttpPost("Create")]
+    [Authorize(Roles = "Mishi")]
+    [HttpGet("Role")]
+    public async Task<IActionResult> GetRoles()
+    {
+        try
+        {
+            var roles = await _roleManager.Roles.Select(r => new RoleResponse
+            {
+                Id = r.Id,
+                Rolename = r.Name
+            }).ToListAsync();
+
+            return Ok(roles);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"[+] Error al devolver roles: ${e.Message}");
+            return StatusCode(500, new { success = false, message = "Internal Server Error :c" });
+        }
+    }
+
+    [Authorize(Roles = "Mishi")]
+    [HttpPost]
     public async Task<ActionResult> RegisterUser(
         [FromBody] Models.Requests.RegisterUserRequest request
     )
@@ -86,7 +111,38 @@ public class UserController(
         catch (Exception e)
         {
             Console.WriteLine($"[+] Error al crear usuario: {e.Message}");
-            return BadRequest(new { success = false, message = "Internal Server Error, verify users. :c" });
+            return StatusCode(500, new { success = false, message = "Internal Server Error, verify users. :c" });
+        }
+    }
+
+    [Authorize]
+    [HttpGet]
+    public async Task<IActionResult> GetUsers()
+    {
+        try
+        {
+            var users = _userManager.Users.ToList();
+            var usersWithRole = new List<UserResponse>();
+
+            foreach (var user in users)
+            {
+                var roles = await _userManager.GetRolesAsync(user);
+
+                usersWithRole.Add(new UserResponse
+                {
+                    Id = user.Id,
+                    Username = user.UserName,
+                    Email = user.Email,
+                    Roles = [.. roles]
+                });
+            }
+
+            return Ok(usersWithRole);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"[+] Error al consultar los usuarios: ${e.Message}");
+            return StatusCode(500, new { success = false, message = "Internal Server Server :c" });
         }
     }
 
@@ -104,17 +160,54 @@ public class UserController(
             if (user == null)
                 return Unauthorized(new { success = false, message = "Invalid username o password." });
 
-            var correctPass = await _userManager.CheckPasswordAsync(user, request.Password);
-            if (!correctPass)
+            var correctPass = _userManager.CheckPasswordAsync(user, request.Password);
+            var role = _userManager.GetRolesAsync(user);
+            var login = _sigInManager.SignInAsync(user, false);
+
+            await Task.WhenAll(correctPass, role, login);
+
+            if (!correctPass.Result)
                 return Unauthorized(new { success = false, message = "Invalid username o password." });
 
-            await _sigInManager.SignInAsync(user, false);
-            return Ok(new { success = true, message = "Successful login. The cookie has been sent! :3" });
+            if (login == null)
+                return StatusCode(500, new { success = false, message = "Internal Server Error :c" });
+
+            if (role.Result == null)
+                return StatusCode(500, new { success = false, message = "Internal Server Error :c" });
+
+            return Ok(new
+            {
+                success = true,
+                message = "Successful login. The cookie has been sent! :3",
+                roles = role.Result
+            });
         }
         catch (Exception e)
         {
             Console.WriteLine($"[+] Error en login: ${e.Message}");
-            return Unauthorized(new { success = false, message = "Internal Server Error :c" });
+            return StatusCode(500, new { success = false, message = "Internal Server Error :c" });
         }
+    }
+
+    [Authorize]
+    [HttpPost("Logout")]
+    public async Task<IActionResult> Logout()
+    {
+        try
+        {
+            await _sigInManager.SignOutAsync();
+            return Ok(new { sucess = true, message = "Sucessful logout!" });
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"[+] Error al cerrar sesión: ${e.Message}");
+            return StatusCode(500, new { success = false, message = "Internal Server Error :c" });
+        }
+    }
+
+    [HttpGet("AccessDenied")]
+    public IActionResult AccessDenied()
+    {
+        return Unauthorized(new { sucess = false, message = "No, papu, usted no tiene autorización para esta acción. :c" });
     }
 }

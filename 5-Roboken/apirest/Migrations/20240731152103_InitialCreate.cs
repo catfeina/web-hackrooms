@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -15,13 +14,13 @@ public partial class InitialCreate : Migration
             columns: table => new
             {
                 Id = table.Column<string>(type: "TEXT", nullable: false),
-                Name = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
+                Name = table.Column<string>(type: "TEXT", maxLength: 256, nullable: false),
                 NormalizedName = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
                 ConcurrencyStamp = table.Column<string>(type: "TEXT", nullable: true)
             },
             constraints: table =>
             {
-                table.PrimaryKey("PK_AspNetRoles", x => x.Id);
+                table.PrimaryKey("PK_AspNetRoles_Id", x => x.Id);
             });
 
         migrationBuilder.CreateTable(
@@ -29,12 +28,12 @@ public partial class InitialCreate : Migration
             columns: table => new
             {
                 Id = table.Column<string>(type: "TEXT", nullable: false),
-                UserName = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
+                UserName = table.Column<string>(type: "TEXT", maxLength: 256, nullable: false),
                 NormalizedUserName = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
                 Email = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
                 NormalizedEmail = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
                 EmailConfirmed = table.Column<bool>(type: "INTEGER", nullable: false),
-                PasswordHash = table.Column<string>(type: "TEXT", nullable: true),
+                PasswordHash = table.Column<string>(type: "TEXT", nullable: false),
                 SecurityStamp = table.Column<string>(type: "TEXT", nullable: true),
                 ConcurrencyStamp = table.Column<string>(type: "TEXT", nullable: true),
                 PhoneNumber = table.Column<string>(type: "TEXT", nullable: true),
@@ -46,7 +45,7 @@ public partial class InitialCreate : Migration
             },
             constraints: table =>
             {
-                table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                table.PrimaryKey("PK_AspNetUsers_Id", x => x.Id);
             });
 
         migrationBuilder.CreateTable(
@@ -55,12 +54,12 @@ public partial class InitialCreate : Migration
             {
                 Id = table.Column<int>(type: "INTEGER", nullable: false)
                     .Annotation("Sqlite:Autoincrement", true),
-                Tittle = table.Column<string>(type: "TEXT", nullable: false),
+                Title = table.Column<string>(type: "TEXT", nullable: false),
                 Verse = table.Column<string>(type: "TEXT", nullable: false)
             },
             constraints: table =>
             {
-                table.PrimaryKey("PK_Poem", x => x.Id);
+                table.PrimaryKey("PK_Poem_Id", x => x.Id);
             });
 
         migrationBuilder.CreateTable(
@@ -75,7 +74,7 @@ public partial class InitialCreate : Migration
             },
             constraints: table =>
             {
-                table.PrimaryKey("PK_AspNetRoleClaims", x => x.Id);
+                table.PrimaryKey("PK_AspNetRoleClaims_Id", x => x.Id);
                 table.ForeignKey(
                     name: "FK_AspNetRoleClaims_AspNetRoles_RoleId",
                     column: x => x.RoleId,
