@@ -1,4 +1,4 @@
-FROM node:22.5.1
+FROM node:20.16.0-slim
 RUN npm install -g @angular/cli@18.1.1
 WORKDIR /app
 COPY package*.json ./
