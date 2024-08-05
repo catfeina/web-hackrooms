@@ -4,6 +4,19 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+const string corsName = "AllowedOrigings";
+var originsAllowed = builder.Configuration.GetSection("OriginsCors:AllowedOrigins").Get<string[]>();
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(corsName, policy =>
+    {
+        policy.WithOrigins(originsAllowed)
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials();
+    });
+});
 
 builder.Services.AddControllers();
 builder.Services
@@ -64,6 +77,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseCors(corsName);
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
