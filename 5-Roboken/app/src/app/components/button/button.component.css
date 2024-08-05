@@ -1,0 +1,29 @@
+.btn-primary {
+    background-color: black;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: gray;
+}
+
+.btn-secondary {
+    background-color: darkgray;
+    color: black;
+}
+
+.btn-secondary:hover {
+    background-color: gray;
+}
+
+button {
+    padding: 20px 30px;
+    margin: 5px;
+    border: none;
+    font-weight: bold;
+}
+
+button[disabled] {
+    opacity: 0.5;
+    cursor: not-allowed;
+}

@@ -1,0 +1,13 @@
+<app-button (onClick)="Logout()" Label="Logout"></app-button>
+
+<div>
+    <app-button Label="Add" [isPrimary]="true" (onClick)="AddTask()" />
+    <label>Title</label>
+    <app-textbox [(Value)]="txtTitle" />
+    <label>Description</label>
+    <app-textbox [(Value)]="txtDescription" />
+
+    <div *ngIf="message">{{message}}</div>
+
+    Pendiente de consumir tareas
+</div>

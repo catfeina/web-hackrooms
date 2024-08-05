@@ -1,0 +1,9 @@
+<div class="login">
+    <app-textbox ToolTip="Usuario" [(Value)]="_txtUser" />
+
+    <app-textbox ToolTip="Contraseña" [(Value)]="_txtPass" [IsPassword]="true" />
+
+    <app-button [isPrimary]="true" Label="Login" (onClick)="Login()" />
+
+    <div *ngIf="_message" class="_message">{{_message}}</div>
+</div>

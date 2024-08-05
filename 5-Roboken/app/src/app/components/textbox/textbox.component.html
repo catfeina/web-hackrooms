@@ -1,0 +1,4 @@
+<div class="textbox-container">
+    <input [type]="IsPassword ? 'password' : 'text'" [value]="Value" (input)="onInput($event)" (focus)="onFocus()"
+        (blur)="onBlur()" [placeholder]="isFocused ? '' : ToolTip" class="textbox-input" />
+</div>
