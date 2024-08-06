@@ -10,10 +10,10 @@ export class ApiService {
   constructor(
     private _http: HttpClient
   ) { }
-  public Get(
+  public Get<T>(
     endpoint: string
-  ): Observable<any> {
-    return this._http.get<any>(`/api/${endpoint}`, { withCredentials: true }).pipe(catchError(this.HandleError));
+  ): Observable<T> {
+    return this._http.get<T>(`/api/${endpoint}`, { withCredentials: true }).pipe(catchError(this.HandleError));
   }
 
   public Post<T>(

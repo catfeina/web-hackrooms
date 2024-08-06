@@ -7,7 +7,16 @@
     <label>Description</label>
     <app-textbox [(Value)]="txtDescription" />
 
-    <div *ngIf="message">{{message}}</div>
+    <div *ngFor="let task of tasks">
+        <h3>{{ task.title }} ({{ task.status }})</h3>
+        <p>{{ task.description }}</p>
 
-    Pendiente de consumir tareas
+        <ul>
+            <li *ngFor="let comment of task.comments">
+                {{ comment.comment }} ({{ comment.userName }})
+            </li>
+        </ul>
+    </div>
+
+    <div *ngIf="message">{{ message }}</div>
 </div>
