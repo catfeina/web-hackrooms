@@ -111,6 +111,41 @@ public class TaskController(
         }
     }
 
+    [HttpGet("{Id}")]
+    public async Task<IActionResult> GetTaskById(int Id)
+    {
+        try
+        {
+            var task = await _table.Tasks.Include(c => c.Commets).FirstOrDefaultAsync(t => t.Id == Id);
+
+            if (task == null)
+            {
+                Console.WriteLine($"[+] No se logró obtener la tarea {Id} :c");
+                return BadRequest(new { success = false, message = "Tarea no encontrada :c" });
+            }
+
+            var response = new TaskResponse
+            {
+                TaskCode = task.Id.Value,
+                Title = task.Title,
+                Description = task.Description,
+                Status = task.Status,
+                Comments = task.Commets.Select(c => new CommentResponse
+                {
+                    Comment = c.Comment,
+                    UserName = c.UserName
+                }).ToList()
+            };
+
+            return Ok(response);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"[+] Error al consultar tarea por Id: {e.Message}");
+            return StatusCode(500, new { success = false, message = "Internal Server Error :c" });
+        }
+    }
+
     [HttpPost("Comment")]
     public async Task<IActionResult> CommentTask(
         [FromBody] CommentTaskRequest request
