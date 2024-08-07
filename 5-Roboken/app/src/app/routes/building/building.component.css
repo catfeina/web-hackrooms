@@ -9,8 +9,8 @@
 .row {
     display: flex;
     align-items: center;
+    margin-top: 5px;
     margin-bottom: 5px;
-    background-color: darkslateblue;
     border-radius: 10px;
 }
 
@@ -36,7 +36,8 @@
 
 .row-verse p {
     margin: 0;
-    background-color: slateblue;
-    padding: 15px;
+    background-color: lightgray;
+    padding: 5px;
     margin: 3px;
+    box-shadow: 5px 5px 5px gray;
 }

@@ -1,0 +1,38 @@
+<div *ngIf="task">
+    <div class="row">
+        <div class="row-title">
+            <h2>{{ task.title }}</h2>
+            ({{ task.status }})
+        </div>
+        <div class="row-verse">
+            <h3>{{ task.description }}</h3>
+        </div>
+    </div>
+
+    <div *ngFor="let c of task.comments" class="row">
+        <div class="row-title">
+            {{ c.userName }}
+        </div>
+        <div class="row-verse">
+            {{ c.comment }}
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="row-title">
+        <p>Agregar comentario:</p>
+    </div>
+    <div class="row-verse">
+        <app-textbox [(Value)]="txtComment" ToolTip="Escriba su comentario" />
+    </div>
+</div>
+
+<div class="row" *ngIf="task?.status != 'Closed'">
+    <app-button [isPrimary]="true" Label="Add" (onClick)="CommentTask()" />
+    <app-button Label="{{ lblActionByRole }}" (onClick)="ActionByRole()" />
+</div>
+
+<div *ngIf="txtMessage" class="row">
+    <label>{{ txtMessage }}</label>
+</div>

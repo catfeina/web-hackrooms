@@ -1,1 +1,6 @@
+<div *ngIf="IsAuthenticate">
+    {{ title }}
+    <app-button [isPrimary]="true" Label="Back" (onClick)="Back()" />
+    <app-button Label="Logout" (onClick)="Logout()" />
+</div>
 <router-outlet />

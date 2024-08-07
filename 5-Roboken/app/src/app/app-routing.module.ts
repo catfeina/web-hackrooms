@@ -4,11 +4,14 @@ import { RoadComponent } from './routes/road/road.component';
 import { StreetComponent } from './routes/street/street.component';
 import { StreetGuard } from './guards/street.guard';
 import { RoadGuard } from './guards/road.guard';
+import { BuildingComponent } from './routes/building/building.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/road', pathMatch: 'full' },
   { path: 'road', component: RoadComponent, canActivate: [RoadGuard] },
   { path: 'street', component: StreetComponent, canActivate: [StreetGuard] },
+  { path: 'building', redirectTo: '/street', pathMatch: 'full' },
+  { path: 'building/:Id', component: BuildingComponent },
   { path: '', component: RoadComponent },
   { path: '**', redirectTo: '/road' }
 ];

@@ -7,6 +7,7 @@ import { ButtonComponent } from './components/button/button.component';
 import { TextboxComponent } from './components/textbox/textbox.component';
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import { StreetComponent } from './routes/street/street.component';
+import { BuildingComponent } from './routes/building/building.component';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { StreetComponent } from './routes/street/street.component';
     RoadComponent,
     ButtonComponent,
     TextboxComponent,
-    StreetComponent
+    StreetComponent,
+    BuildingComponent
   ],
   imports: [
     BrowserModule,

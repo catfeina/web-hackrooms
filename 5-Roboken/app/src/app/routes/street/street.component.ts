@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { RoleService } from '../../services/role.service';
 import { ApiService } from '../../services/api.service';
 import { ApiResponse } from '../../interfaces/Api';
 import { TaskResponse } from '../../interfaces/Task';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-street',
@@ -11,15 +11,11 @@ import { TaskResponse } from '../../interfaces/Task';
 })
 export class StreetComponent implements OnInit {
   constructor(
-    private _role: RoleService,
-    private _api: ApiService
+    private _api: ApiService,
+    private _route: Router
   ) { }
   ngOnInit(): void {
     this.GetTasks();
-  }
-
-  Logout() {
-    this._role.Logout();
   }
 
   txtTitle: string = '';
@@ -41,11 +37,14 @@ export class StreetComponent implements OnInit {
       return;
     }
 
-    this._api.Post<ApiResponse>('Task/Create', { title, description }).subscribe(response => {
-      this.message = response.message;
-    });
-
-    this.GetTasks();
+    this._api.Post<ApiResponse>('Task/Create', { title, description }).subscribe(
+      response => {
+        this.message = response.message;
+        this.GetTasks();
+      }, error => {
+        console.log('[+] Error al crear tarea: ', error);
+      }
+    );
   }
 
   GetTasks() {
@@ -57,5 +56,11 @@ export class StreetComponent implements OnInit {
         console.log('[+] Error al leer tareas: ', error);
       }
     );
+  }
+
+  ShowTask(
+    taskCode: number
+  ) {
+    this._route.navigate(['/building', taskCode]);
   }
 }

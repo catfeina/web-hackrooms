@@ -199,4 +199,44 @@ public class TaskController(
             return StatusCode(500, new { sucess = false, message = "Internal Server Error :c" });
         }
     }
+
+    [Authorize(Roles = "Lvl1")]
+    [HttpPost("Pending")]
+    public async Task<IActionResult> PendingTask(
+        [FromBody] CommentTaskRequest request
+    )
+    {
+        if (request.Status.Equals("Pending"))
+            return BadRequest(new { success = false, message = $"Tarea {request.TaskCode} ya está en estado 'Pending'" });
+
+        request.Comment += $" ({request.Status} -> Pending)";
+        request.Status = "Pending";
+        return await CommentTask(request);
+    }
+
+    [Authorize(Roles = "Lvl2")]
+    [HttpPost("Approve")]
+    public async Task<IActionResult> ApproveTask(
+        [FromBody] CommentTaskRequest request
+    )
+    {
+        if (request.Status.Equals("Approved"))
+            return BadRequest(new { success = false, message = $"Tarea {request.TaskCode} ya está en estado 'Approved'" });
+        request.Comment += $" ({request.Status} -> Approved)";
+        request.Status = "Approved";
+        return await CommentTask(request);
+    }
+
+    [Authorize(Roles = "Lvl3")]
+    [HttpPost("Close")]
+    public async Task<IActionResult> CloseTask(
+        [FromBody] CommentTaskRequest request
+    )
+    {
+        if (request.Status.Equals("Closed"))
+            return BadRequest(new { success = false, message = $"Tarea {request.TaskCode} ya está en estado 'Closed'" });
+        request.Comment += $" ({request.Status} -> Closed)";
+        request.Status = "Closed";
+        return await CommentTask(request);
+    }
 }

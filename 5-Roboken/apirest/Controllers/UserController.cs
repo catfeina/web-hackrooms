@@ -196,7 +196,7 @@ public class UserController(
         try
         {
             await _sigInManager.SignOutAsync();
-            return Ok(new { sucess = true, message = "Sucessful logout!" });
+            return Ok(new { success = true, message = "Sucessful logout!" });
         }
         catch (Exception e)
         {
@@ -208,6 +208,6 @@ public class UserController(
     [HttpGet("AccessDenied")]
     public IActionResult AccessDenied()
     {
-        return Unauthorized(new { sucess = false, message = "No, papu, usted no tiene autorización para esta acción. :c" });
+        return Unauthorized(new { success = false, message = "No, papu, usted no tiene autorización para esta acción. :c" });
     }
 }

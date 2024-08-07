@@ -1,22 +1,39 @@
-<app-button (onClick)="Logout()" Label="Logout"></app-button>
-
-<div>
-    <app-button Label="Add" [isPrimary]="true" (onClick)="AddTask()" />
-    <label>Title</label>
-    <app-textbox [(Value)]="txtTitle" />
-    <label>Description</label>
-    <app-textbox [(Value)]="txtDescription" />
-
-    <div *ngFor="let task of tasks">
-        <h3>{{ task.title }} ({{ task.status }})</h3>
-        <p>{{ task.description }}</p>
-
-        <ul>
-            <li *ngFor="let comment of task.comments">
-                {{ comment.comment }} ({{ comment.userName }})
-            </li>
-        </ul>
+<div class="row">
+    <div class="row-title">
+        <label>Title</label>
     </div>
 
-    <div *ngIf="message">{{ message }}</div>
+    <div class="row-verse">
+        <app-textbox [(Value)]="txtTitle" ToolTip="Título de la tarea" />
+    </div>
+</div>
+<div class="row">
+    <div class="row-title">
+        <label>Description</label>
+    </div>
+    <div class="row-verse">
+        <app-textbox [(Value)]="txtDescription" ToolTip="Descripción de la tarea" />
+    </div>
+</div>
+
+<app-button Label="Add Task" [isPrimary]="true" (onClick)="AddTask()" />
+<div *ngIf="message">{{ message }}</div>
+
+<div class="row">
+    <div class="row-title">
+        <h2>Title</h2>
+    </div>
+    <div class="row-verse">
+        <h2>Description</h2>
+    </div>
+</div>
+<div *ngFor="let task of tasks" class="row">
+    <div class="row-title">
+        <h3>{{ task.title }} ({{ task.status }})</h3>
+    </div>
+    <div class="row-verse">
+        <p>{{ task.description }}</p>
+    </div>
+
+    <app-button Label="Details" (onClick)="ShowTask(task.taskCode)" />
 </div>
