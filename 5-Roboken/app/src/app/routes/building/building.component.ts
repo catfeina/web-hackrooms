@@ -4,6 +4,7 @@ import { TaskResponse } from '../../interfaces/Task';
 import { ApiService } from '../../services/api.service';
 import { ApiResponse } from '../../interfaces/Api';
 import { RoleService } from '../../services/role.service';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-building',
@@ -15,7 +16,8 @@ export class BuildingComponent implements OnInit {
     private _me: ActivatedRoute,
     private _route: Router,
     private _api: ApiService,
-    private _role: RoleService
+    private _role: RoleService,
+    private _sanitizer: DomSanitizer
   ) { }
   ngOnInit(): void {
     this._me.params.subscribe(p => {
@@ -113,5 +115,9 @@ export class BuildingComponent implements OnInit {
         this.CommentTask();
         break;
     }
+  }
+
+  SanitizeComment(comment: string): SafeHtml {
+    return this._sanitizer.bypassSecurityTrustHtml(comment);
   }
 }

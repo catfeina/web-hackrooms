@@ -13,10 +13,10 @@
         <div class="row-title">
             {{ c.userName }}
         </div>
-        <div class="row-verse">
-            {{ c.comment }}
+        <div class="row-verse" [innerHTML]="SanitizeComment(c.comment)">
         </div>
     </div>
+
 </div>
 
 <div class="row">
@@ -24,7 +24,7 @@
         <p>Agregar comentario:</p>
     </div>
     <div class="row-verse">
-        <app-textbox [(Value)]="txtComment" ToolTip="Escriba su comentario" />
+        <app-txtbox [(Value)]="txtComment" ToolTip="Escriba su comentario" />
     </div>
 </div>
 
