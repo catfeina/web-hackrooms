@@ -15,8 +15,7 @@ export class TextboxComponent {
 
   onInput(event: Event): void {
     const text = event.target as HTMLInputElement;
-
-    this.Value = text.value;
+    this.Value = text.value.trim();
     this.ValueChange.emit(this.Value);
   }
 

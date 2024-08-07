@@ -66,7 +66,7 @@ export class BuildingComponent implements OnInit {
   CommentTask(
     endpoint?: string
   ) {
-    this.txtComment = this.txtComment.trim();
+    this.txtComment = this.txtComment;
 
     if (this.txtComment == '') {
       this.txtMessage = 'No olvide ingresar su comentario';
@@ -91,7 +91,7 @@ export class BuildingComponent implements OnInit {
           this.GetTask(this._taskCode);
         }
       }, error => {
-        console.log('[+] Error al comentar tarea: ', error);
+        this.txtMessage = error;
       }
     );
 

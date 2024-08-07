@@ -146,8 +146,8 @@ public class TaskController(
         }
     }
 
-    [HttpPost("Comment")]
-    public async Task<IActionResult> CommentTask(
+
+    private async Task<IActionResult> AddComment(
         [FromBody] CommentTaskRequest request
     )
     {
@@ -200,6 +200,15 @@ public class TaskController(
         }
     }
 
+    [HttpPost("Comment")]
+    public async Task<IActionResult> TaskComment(
+        [FromBody] CommentTaskRequest request
+    )
+    {
+        request.Status = "";
+        return await AddComment(request);
+    }
+
     [Authorize(Roles = "Lvl1")]
     [HttpPost("Pending")]
     public async Task<IActionResult> PendingTask(
@@ -211,7 +220,7 @@ public class TaskController(
 
         request.Comment += $" ({request.Status} -> Pending)";
         request.Status = "Pending";
-        return await CommentTask(request);
+        return await AddComment(request);
     }
 
     [Authorize(Roles = "Lvl2")]
@@ -224,7 +233,7 @@ public class TaskController(
             return BadRequest(new { success = false, message = $"Tarea {request.TaskCode} ya está en estado 'Approved'" });
         request.Comment += $" ({request.Status} -> Approved)";
         request.Status = "Approved";
-        return await CommentTask(request);
+        return await AddComment(request);
     }
 
     [Authorize(Roles = "Lvl3")]
@@ -237,6 +246,6 @@ public class TaskController(
             return BadRequest(new { success = false, message = $"Tarea {request.TaskCode} ya está en estado 'Closed'" });
         request.Comment += $" ({request.Status} -> Closed)";
         request.Status = "Closed";
-        return await CommentTask(request);
+        return await AddComment(request);
     }
 }

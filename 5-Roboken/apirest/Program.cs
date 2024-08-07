@@ -20,7 +20,13 @@ builder.Services.AddCors(options =>
 
 builder.Services.AddControllers();
 builder.Services
-    .AddIdentity<IdentityUser, IdentityRole>()
+    .AddIdentity<IdentityUser, IdentityRole>(options =>
+    {
+        options.Password.RequireDigit = false;
+        options.Password.RequiredLength = 4;
+        options.Password.RequireUppercase = false;
+        options.Password.RequireNonAlphanumeric = false;
+    })
     .AddEntityFrameworkStores<RestContext>()
     .AddRoles<IdentityRole>()
     .AddDefaultTokenProviders();

@@ -26,13 +26,26 @@ export class ApiService {
   }
 
   private HandleError(error: HttpErrorResponse) {
-    switch (error.status) {
-      case 401:
-        return throwError('Invalid username or password. :c');
-      case 400:
-        return throwError('Bad Request :c');
-      default:
-        return throwError('Internal Server Error :c');
+    let errorMessage = 'Internal Server Error :c'; // Default message
+
+    if (error.error instanceof ErrorEvent) {
+      // Client-side or network error
+      errorMessage = `Error: ${error.error.message}`;
+    } else {
+      // Server-side error
+      if (error.error && error.error.message) {
+        errorMessage = error.error.message; // Use the message provided by the server
+      } else {
+        switch (error.status) {
+          case 401:
+            errorMessage = 'Invalid username or password. :c';
+            break;
+          case 400:
+            errorMessage = 'Bad Request :c';
+            break;
+        }
+      }
     }
+    return throwError(errorMessage);
   }
 }
