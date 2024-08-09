@@ -1,0 +1,20 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.title {
+    order: 1;
+    /* Colocar el título en el segundo lugar */
+    margin-right: auto;
+    /* Empujar el título a la derecha */
+}
+
+.buttons {
+    order: 2;
+    /* Colocar los botones en el primer lugar */
+    display: flex;
+    gap: 10px;
+    /* Espaciado entre botones */
+}

@@ -13,7 +13,6 @@ export class RoleService {
     private _route: Router
   ) { }
 
-  private _role: string = '';
   private _isAuthenticated = new BehaviorSubject<boolean>(document.cookie.includes('Patoken'));
 
   public Login(
@@ -23,7 +22,7 @@ export class RoleService {
     return this._api.Post("User/Login", { username, password }).pipe(
       tap(response => {
         if (response.success && response.roles) {
-          this._role = response.roles[0];
+          localStorage.setItem('role', response.roles[0]);
           this._isAuthenticated.next(true);
         }
       })
@@ -36,6 +35,7 @@ export class RoleService {
         if (response.success) {
           this._isAuthenticated.next(false);
           document.cookie = 'Patoken=; Max-Age=-99999999;';
+          localStorage.removeItem('name');
           this._route.navigate(['/road']);
         } else {
           console.log('[+] Logout error: ', response.message);
@@ -46,8 +46,14 @@ export class RoleService {
     );
   }
 
-  public GetRole() {
-    return this._role;
+  public GetRole(): string {
+    let role = localStorage.getItem('role');
+    if (role) {
+      return role;
+    } else {
+      this.Logout();
+      return '';
+    }
   }
 
   public IsAuthenticated(): Observable<boolean> {

@@ -216,7 +216,7 @@ public class TaskController(
     )
     {
         if (request.Status.Equals("Pending"))
-            return BadRequest(new { success = false, message = $"Tarea {request.TaskCode} ya está en estado 'Pending'" });
+            return BadRequest(new { success = false, message = $"Tarea {request.TaskCode} ya está en estado 'Pending' (La 192.168.0.56 también utiliza el sistema...)" });
 
         request.Comment += $" ({request.Status} -> Pending)";
         request.Status = "Pending";
@@ -230,8 +230,8 @@ public class TaskController(
     )
     {
         if (request.Status.Equals("Approved"))
-            return BadRequest(new { success = false, message = $"Tarea {request.TaskCode} ya está en estado 'Approved'" });
-        request.Comment += $" ({request.Status} -> Approved)";
+            return BadRequest(new { success = false, message = $"Tarea {request.TaskCode} ya está en estado 'Approved' (A07:2017)" });
+        request.Comment += $" ({request.Status} -> Approved) (Hay vulnerabilidades del Owasp top 10)";
         request.Status = "Approved";
         return await AddComment(request);
     }
@@ -244,7 +244,7 @@ public class TaskController(
     {
         if (request.Status.Equals("Closed"))
             return BadRequest(new { success = false, message = $"Tarea {request.TaskCode} ya está en estado 'Closed'" });
-        request.Comment += $" ({request.Status} -> Closed)";
+        request.Comment += $" ({request.Status} -> Closed) (Ya se siente cerca...)";
         request.Status = "Closed";
         return await AddComment(request);
     }

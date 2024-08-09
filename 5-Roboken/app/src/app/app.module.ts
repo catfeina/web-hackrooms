@@ -8,6 +8,7 @@ import { TextboxComponent } from './components/textbox/textbox.component';
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import { StreetComponent } from './routes/street/street.component';
 import { BuildingComponent } from './routes/building/building.component';
+import { HouseComponent } from './routes/house/house.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { BuildingComponent } from './routes/building/building.component';
     ButtonComponent,
     TextboxComponent,
     StreetComponent,
-    BuildingComponent
+    BuildingComponent,
+    HouseComponent
   ],
   imports: [
     BrowserModule,

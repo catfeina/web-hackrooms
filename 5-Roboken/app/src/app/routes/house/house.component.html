@@ -1,0 +1,16 @@
+<h3>Ingrese el título que desea buscar:</h3>
+<app-textbox ToolTip="Ingrese su título aquí" [(Value)]="txtTitle" />
+<app-button Label="Buscar" [isPrimary]="true" (onClick)="FindByTitle()" />
+
+<app-button Label="Get Flag" (onClick)="GetFlag()" />
+
+<div *ngIf="lblMessage" class="message">{{ lblMessage }}</div>
+
+<div *ngIf="Poems.length > 0" class="row">
+    <div class="row-title">Title</div>
+    <div class="row-verse">Verse</div>
+</div>
+<div *ngFor="let poem of Poems" class="row">
+    <div class="row-title">{{ poem.title }}</div>
+    <div class="row-verse">{{ poem.verse }}</div>
+</div>

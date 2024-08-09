@@ -15,9 +15,15 @@ export class AppComponent {
     private _role: RoleService,
     private _route: Router
   ) {
+    const storedTitle = localStorage.getItem('role');
+    this.title = storedTitle ? storedTitle : this.title;
+
     this._role.IsAuthenticated().subscribe(isAuth => {
       this.IsAuthenticate = isAuth;
-      this.title = _role.GetRole();
+      if (isAuth) {
+        const role = this._role.GetRole();
+        this.title = role ? role : this.title;
+      }
     });
   }
 

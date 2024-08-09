@@ -40,21 +40,26 @@ public class PoemController(
         }
     }
 
-    [HttpGet]
-    public async Task<IActionResult> GetVerses()
+    [HttpGet("{inTitle}")]
+    public async Task<IActionResult> GetVerses(
+        string inTitle
+    )
     {
         try
         {
-            var poem = await _table.Poem.Select(p => new PoemResponse
-            {
-                Title = p.Title,
-                Verse = p.Verse
-            }).ToArrayAsync();
+            if (string.IsNullOrEmpty(inTitle))
+                return BadRequest(new { success = false, message = "Debe ingresar un texto para buscar :c" });
+
+            var query = $"select Title, Verse from Poem where Title like '%{inTitle}%'";
+            var poem = await _table.Poem.FromSqlRaw(query)
+                .Select(v => new PoemResponse { Title = v.Title, Verse = v.Verse })
+                .ToListAsync();
+
             return Ok(poem);
         }
         catch (Exception e)
         {
-            Console.WriteLine($"[+] Error al leer poema: {e.Message}");
+            Console.WriteLine($"[+] Error al consultar verso: {e.Message}");
             return StatusCode(500, new { success = false, message = "Internal Server Error :c" });
         }
     }

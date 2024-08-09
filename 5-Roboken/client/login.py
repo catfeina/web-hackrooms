@@ -24,12 +24,12 @@ try:
 
     # Ingresar el usuario
     username = driver.find_element(By.CSS_SELECTOR, 'input[placeholder="Usuario"]')
-    username.send_keys('usr2')
+    username.send_keys('Hulk')
     print('2. Usuario ingresado')
 
     # Ingresar la contraseña
     password = driver.find_element(By.CSS_SELECTOR, 'input[placeholder="Contraseña"]')
-    password.send_keys('asdf')
+    password.send_keys('HulkAplasta')
     print('3. Contraseña ingresada')
 
     # Hacer clic en el botón de login
