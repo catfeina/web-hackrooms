@@ -17,27 +17,17 @@ RUN wget -q -O /tmp/geckodriver.tar.gz https://github.com/mozilla/geckodriver/re
     && tar -xzf /tmp/geckodriver.tar.gz -C /usr/local/bin/ \
     && rm /tmp/geckodriver.tar.gz
 
-# Instalar Selenium
 RUN pip install selenium
 
-# Crear directorio de trabajo
 WORKDIR /app
+ENV SERVER=http://server
 
-# Copiar el script de login
 COPY login.py .
 RUN chmod 755 login.py
 
-# Copiar crontab
 COPY crontab /etc/cron.d/my-cron-job
-
-# Dar permisos a crontab
 RUN chmod 0644 /etc/cron.d/my-cron-job
-
-# Aplicar crontab
 RUN crontab /etc/cron.d/my-cron-job
-
-# Crear el directorio y archivo de log
 RUN mkdir -p /var/log && touch /var/log/cron.log
 
-# Comando para ejecutar cron y el script
 CMD ["sh", "-c", "cron && tail -f /var/log/cron.log"]

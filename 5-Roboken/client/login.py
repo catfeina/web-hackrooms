@@ -7,6 +7,18 @@ from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import time
+import os
+from datetime import datetime
+
+# Obtener la fecha y hora actual
+current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+print(f"Fecha y hora actual: {current_time}")
+
+# Obtener la URL del servidor desde la variable de entorno SERVER
+server_url = os.getenv('SERVER')
+if not server_url:
+    print("[+] Error: La variable de entorno SERVER no está configurada.")
+    exit(1)
 
 # Configurar Firefox en modo headless
 firefox_options = Options()
@@ -18,8 +30,8 @@ firefox_options.add_argument("--disable-dev-shm-usage")
 driver = webdriver.Firefox(options=firefox_options)
 
 try:
-    # Navegar a la página de login
-    driver.get("http://app:4200/road")
+    # Navegar a la página de login utilizando la variable de entorno SERVER
+    driver.get(f"{server_url}/road")
     print('1. Página cargada exitosamente')
 
     # Ingresar el usuario
@@ -60,7 +72,7 @@ try:
             try:
                 new_tab = driver.execute_script("window.open('');")
                 driver.switch_to.window(driver.window_handles[1])
-                driver.get(f"http://app:4200/building/{index}")
+                driver.get(f"{server_url}/building/{index}")
                 print(f'6.{index}. Abierta la ruta /building/{index}')
                 time.sleep(5)
                 driver.close()
