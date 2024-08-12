@@ -22,9 +22,8 @@ RUN wget -q -O /tmp/geckodriver.tar.gz https://github.com/mozilla/geckodriver/re
 
 # Instalar Selenium
 RUN pip install selenium
-
-# Crear directorio de trabajo
 WORKDIR /app
+ENV SERVER=http://server
 
 # Copiar el script de Python
 COPY login.py .
@@ -37,8 +36,6 @@ RUN chmod 0644 /etc/cron.d/my-cron-job
 # Copiar el script de entrada
 COPY entrypoint.sh /app/entrypoint.sh
 RUN chmod +x /app/entrypoint.sh
-
-# Crear el archivo de log para cron
 RUN mkdir -p /var/log && touch /var/log/cron.log
 
 # Establecer el punto de entrada
