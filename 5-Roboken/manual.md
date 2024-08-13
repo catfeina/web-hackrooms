@@ -1,12 +1,24 @@
+# Configuración manual de servidor
+
+## 1. Instalación de docker
+
 ```bash
 apk add docker
 rc-update add docker
 service docker start
 ```
 
+> **Nota**: Comando para Alpine Linux. Ajustar según distro.
+
+## 2. Creación de script de despliegue
+
 ```bash
 nano /usr/local/bin/docker.sh
 ```
+
+## 3. Script de despliege
+
+Dentro del script creado anteriormente copiar el siguiente comando, ajustar las IP si estas no están disponibles en red de trabajo o cambiar el adaptador según sea el caso:
 
 ```script
 #!/bin/sh
@@ -20,27 +32,27 @@ docker system prune -fa
 
 # Variables
 ip=$(ip a show eth0 | grep inet | head -n 1 | cut -d ' ' -f 6)
-subnet="$(ipcalc -n '$ip' | cut -d '=' -f 2)/$(ipcalc -p '$ip' | cut -d '=' -f 2)"
+subnet="$(ipcalc -n "$ip" | cut -d '=' -f 2)/$(ipcalc -p "$ip" | cut -d '=' -f 2)"
 gateway=$(ip route | grep default | cut -d ' ' -f 3)
-ipClient="$(echo -n '$ip' | cut -d '.' -f 1-3).56"
-
-# Interfaces
-ip link add name br0 type bridge
-ip link set br0 up
-ip link add link eth0 name eth0.10 type macvlan mode bridge
-ip link set eth0.10 up
-ip link set eth0.10 master br0
-ip link set eth0 promisc on
+clientIp="$(echo -n "$ip" | cut -d '.' -f 1-3).56"
+serverIp="$(echo -n "$ip" | cut -d '.' -f 1-3).57"
 
 # Containers
-docker network create -d macvlan --subnet="$subnet" --gateway="$gateway" -o parent=eth0.10 client
+docker network create -d ipvlan --subnet="$subnet" --gateway="$gateway" -o parent=eth0 external
 docker network create internal
 
+docker pull kradbyte/roboken:reviewer
+docker pull kradbyte/roboken:user
+docker pull kradbyte/roboken:api
+docker pull kradbyte/roboken:server
+
 docker run -d --name api --network internal kradbyte/roboken:api
-docker run -d --name server --network internal kradbyte/roboken:server
+docker run -d --name server --network external --network-alias=private --ip="$serverIp" kradbyte/roboken:server
 docker run -d --name reviewer --network internal kradbyte/roboken:reviewer
-docker run -d --name user --network client --ip="$ipClient" -e SERVER="http://$(ipcalc -h '$ip' | cut -d '=' -f 1)" kradbyte/roboken:user
+docker run -d --name user --network external --ip="$clientIp" -e SERVER="http://$(ipcalc -h '$serverIp' | cut -d '=' -f 1)" kradbyte/roboken:user
 ```
+
+## 4. Programación de tarea
 
 ```bash
 chmod 755 /usr/local/bin/docker.sh

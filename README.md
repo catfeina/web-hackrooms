@@ -46,6 +46,15 @@ El laboratorio [ShellShift](/3-Minite) está diseñado para manipular solicitude
 **Descripción**:
 El laboratorio [Apinje](/4-Apinje) proporciona un entorno para explotación de vulnerabilidades basadas en Owasp top 10.
 
+### 2.5. That's my biscuit
+
+**Objetivos de aprendizaje**:
+- Profundizar en las vulnerabilidades más comunes, según OWASP.
+- Diferenciar conceptos de payload y exploit.
+
+**Descripción**:
+El laboratorio [Roboken](/5-Roboken) está enfocado en profundizar la detección y explotación de volunerabilidades enumeradas por OWASP. Para ello utilizaremos exploits personalizados y comprenderemos el riesgo de robo de cookies.
+
 ## 3. Comenzando
 
 Para empezar con 'hackrooms', asegúrate de tener Docker instalado en tu sistema o contar con Virtual Box. Cada laboratorio viene con instrucciones detalladas sobre cómo desplegarlo y configurarlo usando Docker o Virtual Box, lo que te permitirá enfocarte en el aprendizaje y la práctica sin preocuparte tanto por la configuración del entorno.

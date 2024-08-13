@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  api:
+    image: kradbyte/roboken:api
+    networks:
+      - internal
+
+  server:
+    image: kradbyte/roboken:server
+    networks:
+      external:
+        ipv4_address: ${SERVER_IP}
+    environment:
+      - SERVER_NAME=private
+
+  reviewer:
+    image: kradbyte/roboken:reviewer
+    networks:
+      - internal
+
+  user:
+    image: kradbyte/roboken:user
+    networks:
+      external:
+        ipv4_address: ${CLIENT_IP}
+    environment:
+      - SERVER=http://${SERVER_IP}
+
+networks:
+  internal:
+    driver: bridge
+
+  external:
+    driver: ipvlan
+    driver_opts:
+      parent: eth0
+    ipam:
+      config:
+        - subnet: ${SUBNET}
+          gateway: ${GATEWAY}
