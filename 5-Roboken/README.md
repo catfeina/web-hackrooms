@@ -72,7 +72,7 @@ ng build --configuration production
 
 ```bash
 docker system prune -fa
-#cd 4-Apinje
+#cd app
 docker build -t server .
 ```
 #### 2.2.2. Modificaciones a la API
@@ -80,7 +80,7 @@ docker build -t server .
 En caso de modificar la API, también encontraremos un [dockerfile](apirest/Dockerfile) que servirá para compilar nuestra API. A diferencia del Dockerfile anterior, con la API solo podremos generar una imagen compilada, para pruebas deberemos instalar Visual Studio o eliminar y reconstruir la imagen por cada cambio que hagamos.
 
 ```bash
-#cd mvcapi
+#cd apirest
 docker build -t api .
 ```
 
