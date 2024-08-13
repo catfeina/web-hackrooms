@@ -131,7 +131,7 @@ Burp Suite
 - Para validar que el laboratorio esté operativo, bastará con ingresar la IP de la máquina en cualquier navegador, hacer un ping o un curl.
 - _Nota_: Al iniciar la máquina habrá un mensaje de inicio de sesión, esto nos indica que la máquina ha terminado de encender y podremos comenzar a trabajar. Deberemos tener cuidado nuevamente con los adaptadores de red según estemos conectados por WiFi (Dual-Band) o por cable (PCIe).
 
-![Adaptadores](imagine/adaptadores.png)
+![Adaptadores](imagine/adapters.png)
 
 ## 4. Resolución de la máquina
 
