@@ -146,6 +146,67 @@ public class UserController(
         }
     }
 
+    [Authorize(Roles = "Mishi")]
+    [HttpPut("{userId}/role")]
+    public async Task<ActionResult> UpdateUserRole(
+    string userId,
+    [FromBody] Models.Requests.RegisterRoleRequest request
+)
+    {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
+        try
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+                return NotFound(new { success = false, message = "User not found. :c" });
+
+            var currentRoles = await _userManager.GetRolesAsync(user);
+            var removeResult = await _userManager.RemoveFromRolesAsync(user, currentRoles);
+            if (!removeResult.Succeeded)
+                return BadRequest(new { success = false, message = removeResult.Errors });
+
+            var existsRole = await _roleManager.RoleExistsAsync(request.Rolename);
+            if (!existsRole)
+                return BadRequest(new { success = false, message = "Role does not exist. :c" });
+
+            var addResult = await _userManager.AddToRoleAsync(user, request.Rolename);
+            if (!addResult.Succeeded)
+                return BadRequest(new { success = false, message = addResult.Errors });
+
+            return Ok(new { success = true, message = "User role updated! :3" });
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"[+] Error updating user role: {e.Message}");
+            return StatusCode(500, new { success = false, message = "Internal Server Error. :c" });
+        }
+    }
+
+    [Authorize(Roles = "Mishi")]
+    [HttpDelete("{userId}")]
+    public async Task<ActionResult> DeleteUser(string userId)
+    {
+        try
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+                return NotFound(new { success = false, message = "User not found. :c" });
+
+            var result = await _userManager.DeleteAsync(user);
+            if (!result.Succeeded)
+                return BadRequest(new { success = false, message = result.Errors });
+
+            return Ok(new { success = true, message = "User has been deleted! :3" });
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"[+] Error deleting user: {e.Message}");
+            return StatusCode(500, new { success = false, message = "Internal Server Error. :c" });
+        }
+    }
+
     [HttpPost("Login")]
     public async Task<IActionResult> Login(
         [FromBody] Models.Requests.LoginUserRequest request
