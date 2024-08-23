@@ -49,6 +49,12 @@ docker build -t app .
 docker run -d --name app -p 4200:4200 -v $(pwd):/app -w /app app
 ```
 
+> **Nota**: Es probable que nos de un error al lanzar el contenedor, porque al utilizar el volumen estamos reemplazando los archivos de /app por los archivos del repositorio, pero en el repositorio no se encuentran las dependencias `node_module`, por lo que deberemos instalarlas primero en la carpeta del repositorio:
+
+```bash
+docker run --rm -v $(pwd):/app -w /app node:22.4.1 npm install
+```
+
 - Si modificamos la SPA y queremos revisar nuestros cambios, será necesario ejecutar el siguiente comando para precompilar el código.
 
 ```bash
