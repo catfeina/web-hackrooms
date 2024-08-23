@@ -105,7 +105,7 @@ docker run -it --rm --name sqlite -v $(pwd):/data -w /data nouchka/sqlite3 Rest.
 ## 3. Descripción del laboratorio
 
 **Description**
-Para los hackers es habitual hablar de los payloads y los exploits. En resumidas cuentas el payload es la forma en que se explota una vulnerabilidad, y el exploit es el método o script que explota dicha vulnerabilidad. Suponiendo que quieras ingresar a una casa sin llave, el payload sería buscar la forma de ingresar, como utilizando una ventana; el exploit sería la piedra que lanzas para romperla, una cortadora de vidrio y así. :3
+Para los hackers es habitual hablar de los payloads y los exploits. En resumidas cuentas el exploit es la forma en que se explota una vulnerabilidad, y el payload es lo que se busca hacer al explotar la vulnerabilidad. Suponiendo que quieras ingresar a una casa sin llave, el exploit serían los métodos o formas de ingresar, como utilizando una ventana, una puerta trasera, etc; el payload sería lo que se haría al lograr ingresar a la casa, como llevarse algún objeto, dejar una nota, etc. En un caso más práctico, un script funcionaría como exploit y lo que hace el código sería el exploit.
 Oh sí, para este lab vamos a ver payloads (OWASP), escalaciones y exploits personalizados.
 
 **Target**
@@ -119,6 +119,7 @@ Recupera la flag
 
 **Grants**
 - Las pistas las encontraremos dentro del lab.
+- [cirt-default-usernames.txt](https://github.com/danielmiessler/SecLists/blob/master/Usernames/cirt-default-usernames.txt), [500-worst-passwords](https://github.com/danielmiessler/SecLists/blob/master/Passwords/Common-Credentials/500-worst-passwords.txt).txt.
 - Pay attention.
 
 **Tools**
