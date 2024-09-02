@@ -4,7 +4,7 @@
 - [2. Instalación y despliegue](#2-instalación-y-despliegue)
 - [2.1. Despliegue automático](#21-despliegue-automático)
 - [2.2. Despliegue manual](#22-despliegue-manual)
-- [2.2.1. Modificaciones a la SPA](221-modificaciones-a-la-spa)
+- [2.2.1. Modificaciones a la SPA](#221-modificaciones-a-la-spa)
 - [2.2.2. Modificaciones a la API](#222-modificaciones-a-la-api)
 - [2.2.3. Modificaciones a la BD](#223-modificaciones-a-la-bd)
 - [3. Descripción del laboratorio](#3-descripción-del-laboratorio)
